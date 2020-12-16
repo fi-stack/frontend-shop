@@ -13,7 +13,7 @@ const auth = {
         token: localStorage.getItem('token') || '',
 
         //state user, pakai localStorage, untuk menyimpan data user yang sedang login
-        user: JSON.parse(localStorage.getItem('user')) || {}, 
+        user: JSON.parse(localStorage.getItem('user')) || {},
 
     },
 
@@ -22,8 +22,8 @@ const auth = {
 
         //update state token dan state user dari hasil response
         AUTH_SUCCESS(state, token, user) {
-            state.token   = token // <-- assign state token dengan response token
-            state.user    = user // <-- assign state user dengan response data user
+            state.token = token // <-- assign state token dengan response token
+            state.user = user // <-- assign state user dengan response data user
         },
 
         //update state user dari hasil response register / login
@@ -31,13 +31,21 @@ const auth = {
             state.user = user // <-- assign state user dengan response data user
         },
 
+        //fungsi logout
+        AUTH_LOGOUT(state) {
+            state.token = '' // <-- set state token ke empty
+            state.user = {} // <-- set state user ke empty array
+        }
+
     },
 
     //actions
     actions: {
 
         //action register
-        register({ commit }, user) {
+        register({
+            commit
+        }, user) {
 
             //define callback promise
             return new Promise((resolve, reject) => {
@@ -89,17 +97,43 @@ const auth = {
         },
 
         //action getUser
-        getUser({ commit }) {
+        getUser({
+            commit
+        }) {
 
             //ambil data token dari localStorage
             const token = localStorage.getItem('token')
 
-            Api.defaults.headers.common['Authorization'] = "Bearer " +token
+            Api.defaults.headers.common['Authorization'] = "Bearer " + token
             Api.get('/user')
-            .then(response => {
-                
-                //commit ke mutatuin GET_USER dengan hasil response
-                commit('GET_USER', response.data.user)
+                .then(response => {
+
+                    //commit ke mutatuin GET_USER dengan hasil response
+                    commit('GET_USER', response.data.user)
+
+                })
+        },
+
+        //action logout
+        logout({
+            commit
+        }) {
+
+            //define callback promise
+            return new Promise((resolve) => {
+
+                //commit ke mutation AUTH_LOGOUT
+                commit('AUTH_LOGOUT')
+
+                //remove value dari localStorage
+                localStorage.removeItem('token')
+                localStorage.removeItem('user')
+
+                //delete header axios
+                delete Api.defaults.headers.common['Authorization']
+
+                //return resolve ke component 
+                resolve()
 
             })
         },
