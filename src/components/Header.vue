@@ -29,7 +29,12 @@
                             </div>
 
                             <div class="account">
-                                <router-link :to="{name: 'login'}" class="btn search-button btn-md d-none d-md-block ml-4"><i class="fa fa-user-circle"></i> ACCOUNT</router-link>
+                                <router-link :to="{name: 'login'}" v-if="!isLoggedIn"
+                                    class="btn search-button btn-md d-none d-md-block ml-4"><i
+                                        class="fa fa-user-circle"></i> ACCOUNT</router-link>
+                                <router-link :to="{name: 'dashboard'}" v-else
+                                    class="btn search-button btn-md d-none d-md-block ml-4"><i
+                                        class="fa fa-tachometer-alt"></i> DASHBOARD </router-link>
                             </div>
 
                         </div>
@@ -41,7 +46,26 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
     export default {
 
+        setup() {
+
+            //store vuex
+            const store = useStore()
+
+            //computed
+            const isLoggedIn = computed(() => {
+
+                //get getters isLoggedIn dari module auth
+                return store.getters['auth/isLoggedIn']
+            })
+
+            return {
+                store,
+                isLoggedIn
+            }
+        }
     }
 </script>
