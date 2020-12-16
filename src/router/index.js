@@ -27,6 +27,24 @@ const routes = [{
             requiresAuth: true
         }
     },
+    {
+        path: '/customer/order',
+        name: 'order',
+        component: () => import( /* webpackChunkName: "order" */ '../views/order/Index.vue'),
+        meta: {
+            //chek is loggedIn
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/customer/order/:snap_token',
+        name: 'detail_order',
+        component: () => import( /* webpackChunkName: "detail_order" */ '../views/order/Show.vue'),
+        meta: {
+            //chek is loggedIn
+            requiresAuth: true
+        }
+    },
 ]
 
 //create router
