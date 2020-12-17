@@ -50,6 +50,11 @@ const routes = [{
         name: 'home',
         component: () => import ( /* webpackChuckName: "home" */ '@/views/home/Index.vue')
     },
+    {
+        path: '/product/:slug',
+        name: 'detail_product',
+        component: () => import( /* webpackChuckName: "home" */ '../views/product/Show.vue')
+    },
 ]
 
 //create router
