@@ -45,6 +45,11 @@ const routes = [{
             requiresAuth: true
         }
     },
+    {
+        path: '/',
+        name: 'home',
+        component: () => import ( /* webpackChuckName: "home" */ '@/views/home/Index.vue')
+    },
 ]
 
 //create router
