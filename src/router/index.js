@@ -53,7 +53,17 @@ const routes = [{
     {
         path: '/product/:slug',
         name: 'detail_product',
-        component: () => import( /* webpackChuckName: "home" */ '../views/product/Show.vue')
+        component: () => import( /* webpackChuckName: "detail_product" */ '../views/product/Show.vue')
+    },
+    {
+        path: '/categories',
+        name: 'categories',
+        component: () => import( /* webpackChuckName: "category" */ '../views/category/Index.vue')
+    },
+    {
+        path: '/category/:slug',
+        name: 'detail_category',
+        component: () => import( /* webpackChuckName: "detail_category" */ '../views/category/Show.vue')
     },
 ]
 
